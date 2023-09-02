@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Checklist</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+    </head>
+
+    <body>
+        <div id="app">
+            <h1> Ma Checklist en Vue.JS</h1>
+            <input type="text" v-model="message" />
+            <a href="#" @click="ajouterNote" v-if=" message != '' ">Ajouter</a>
+            {{ message }}
+            
+            <note v-for="todo in todos" :content="todo" v-on:click="inverser"></note>
+        </div>
+
+        <script>
+
+            const vm = Vue.createApp({
+                data(){
+                    return {
+                        message: 'Hello world !',
+                        todos: ["Hello World","Apprendre Vue JS","Apprendre TypeScript" ]
+                            
+                    }
+                },
+                methods:{
+                    inverser(){
+                        this.todos.reverse();
+                    },
+                    ajouterNote(){
+                        this.todos.push(this.message);
+                        this.message = '';
+                    }
+                }
+            })
+
+
+            vm.component('note',{
+                props: ['content'],
+                template: `<p> {{ content }} </p>`
+            });
+
+            vm.mount('#app');
+
+        </script>
+    
+</body>
+</html>
